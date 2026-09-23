@@ -9,7 +9,7 @@
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
 rails_require_root
 
-rails_html_task "Redo Last Migration" db:migrate:redo
+rails_html_task "Migrate" db:migrate
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -18,7 +18,7 @@ rails_html_task "Redo Last Migration" db:migrate:redo
 	<key>keyEquivalent</key>
 	<string>^|</string>
 	<key>name</key>
-	<string>Redo Last Migration</string>
+	<string>Migrate</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -28,7 +28,7 @@ rails_html_task "Redo Last Migration" db:migrate:redo
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
-	<string>CFDA9F62-D071-4E0F-AD10-66AE0729FFCF</string>
+	<string>985F56D4-82ED-4C45-8250-2ECCFC71957E</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>

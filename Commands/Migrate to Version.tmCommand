@@ -9,7 +9,19 @@
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
 rails_require_root
 
-rails_html_task "Redo Last Migration" db:migrate:redo
+# The 50 most recent migrations, newest first.
+items=()
+for file in "$RAILS_ROOT"/db/migrate/*.rb; do
+	[[ -e "$file" ]] || continue
+	name=$(basename "$file" .rb)
+	version=${name%%_*}
+	title="${name#*_}  —  ${version:0:4}-${version:4:2}-${version:6:2} ${version:8:2}:${version:10:2}"
+	items=("$title" "$version" "${items[@]:0:98}")
+done
+[[ ${#items[@]} -gt 0 ]] || rails_exit_tool_tip "There are no migrations in db/migrate."
+
+version=$(rails_menu "${items[@]}") || rails_exit_discard
+rails_html_task "Migrate to Version $version" db:migrate "VERSION=$version"
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -18,7 +30,7 @@ rails_html_task "Redo Last Migration" db:migrate:redo
 	<key>keyEquivalent</key>
 	<string>^|</string>
 	<key>name</key>
-	<string>Redo Last Migration</string>
+	<string>Migrate to Version…</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -28,7 +40,7 @@ rails_html_task "Redo Last Migration" db:migrate:redo
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
-	<string>CFDA9F62-D071-4E0F-AD10-66AE0729FFCF</string>
+	<string>07C696F8-79F5-4E0B-9EE9-03B693A54ABB</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>
