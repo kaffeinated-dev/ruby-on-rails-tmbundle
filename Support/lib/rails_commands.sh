@@ -59,6 +59,30 @@ rails_exec () {
 # Like rails_exec, but without input, so generators can’t wait for an answer.
 rails_run () { rails_exec "$@" </dev/null; }
 
+# Like rails_run, but stop the command after «seconds», e.g. when starting the
+# application waits for a service. mise exec replaces itself with the command,
+# so its process is the one stopped.
+rails_run_with_timeout () {
+	local seconds=$1 mise pid watcher rc
+	shift
+	mise=$(rails_mise)
+	(
+		cd "$RAILS_ROOT" || exit 1
+		if [[ -n "$mise" ]]; then
+			exec "$mise" exec -- "$@"
+		else
+			exec "$@"
+		fi
+	) </dev/null &
+	pid=$!
+	( sleep "$seconds"; kill "$pid" 2>/dev/null ) &
+	watcher=$!
+	wait "$pid"
+	rc=$?
+	kill "$watcher" 2>/dev/null
+	return $rc
+}
+
 # Run the bundle’s own Ruby scripts: with macOS’s Ruby when available, as it
 # starts faster than through mise, otherwise with the application’s Ruby.
 rails_ruby () {
@@ -93,12 +117,17 @@ rails_request_string () {
 	printf '%s' "$result" | /usr/bin/plutil -extract eventInfo.returnArgument raw -o - - 2>/dev/null
 }
 
-# Show a menu at the caret. Arguments are alternating titles and values.
-# Prints the value of the selected item; returns 1 when cancelled.
+# Show a menu at the caret. Arguments are alternating titles and values; a
+# title of "-" is a separator. Prints the value of the selected item; returns
+# 1 when cancelled.
 rails_menu () {
 	local items="(" result
 	while [[ $# -ge 2 ]]; do
-		items+="{ title = $(rails_plist_quote "$1"); value = $(rails_plist_quote "$2"); },"
+		if [[ "$1" == "-" ]]; then
+			items+="{ separator = 1; },"
+		else
+			items+="{ title = $(rails_plist_quote "$1"); value = $(rails_plist_quote "$2"); },"
+		fi
 		shift 2
 	done
 	result=$("$DIALOG" menu --items "$items)")
@@ -139,6 +168,15 @@ rails_open () {
 # ===============
 
 rails_html_escape () { sed -l -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'; }
+
+# Link the files in generator output (‘create  app/models/post.rb’) so they
+# open in TextMate.
+rails_html_link_files () {
+	local root=${RAILS_ROOT// /%20}
+	root=${root//\#/%23}
+	root=${root//&/%26}
+	sed -l -E "s#^( *(create|identical|skip|force|conflict|exist) +)([^ ]+\.[A-Za-z0-9]+)\$#\1<a href=\"txmt://open?url=file://${root}/\3\">\3</a>#"
+}
 
 rails_html_header () {
 	cat <<HTML
