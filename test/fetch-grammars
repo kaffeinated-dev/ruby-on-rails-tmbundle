@@ -1,0 +1,16 @@
+#!/bin/sh
+# Fetch the grammars included by ‘Ruby on Rails.plist’. The Ruby grammar is
+# pinned to the revision served by TextMate’s bundle index, so tests see the
+# same source.ruby scopes as the Ruby bundle installed by TextMate.
+set -e
+
+RUBY_TMBUNDLE_SHA=05698e99314d8653e2e9d8f198d3c83e387ee1eb
+dest=test/vendor/ruby-tmbundle
+
+if [ "$(cat "$dest/.sha" 2>/dev/null)" = "$RUBY_TMBUNDLE_SHA" ]; then
+	exit 0
+fi
+
+rm -rf "$dest" && mkdir -p "$dest"
+curl -fsSL "https://codeload.github.com/textmate/ruby.tmbundle/tar.gz/$RUBY_TMBUNDLE_SHA" | tar -xz --strip-components=1 -C "$dest"
+echo "$RUBY_TMBUNDLE_SHA" > "$dest/.sha"
