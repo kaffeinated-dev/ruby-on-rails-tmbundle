@@ -105,6 +105,27 @@
 		</dict>
 		<dict>
 			<key>begin</key>
+			<string>(^\s*)(?=class\s+[.a-zA-Z0-9_:]+\s*&lt;\s*(ActiveJob::Base\b|[.a-zA-Z0-9_:]*Job(?![\w:])))</string>
+			<key>comment</key>
+			<string>Uses lookahead to match classes that inherit from ActiveJob::Base or a class ending in Job (e.g. ApplicationJob); includes 'source.ruby' to avoid infinite recursion</string>
+			<key>end</key>
+			<string>^\1(?=end)\b</string>
+			<key>name</key>
+			<string>meta.rails.job</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.ruby</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
 			<string>(^\s*)(?=class\s+.+(ApplicationRecord|ActiveRecord::Base))</string>
 			<key>comment</key>
 			<string>Uses lookahead to match classes that (may) inherit from ActiveRecord::Base; includes 'source.ruby' to avoid infinite recursion</string>
@@ -302,6 +323,12 @@
 			<string>(?&lt;!\.)\b(after_deliver|around_deliver|before_deliver)\b(?![?!:])</string>
 			<key>name</key>
 			<string>support.function.actionmailer.rails</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;!\.)\b(after_discard|after_enqueue|after_perform|around_enqueue|around_perform|before_enqueue|before_perform|discard_on|limits_concurrency|queue_as|queue_with_priority|retry_on)\b(?![?!:])</string>
+			<key>name</key>
+			<string>support.function.activejob.rails</string>
 		</dict>
 		<dict>
 			<key>match</key>
