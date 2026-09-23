@@ -8,6 +8,17 @@ You can install this bundle in TextMate by opening the preferences and going to 
 * [Commit Styleguide](http://kb.textmate.org/commit_styleguide) — _before you send a pull request_
 * [Writing Bug Reports](http://kb.textmate.org/writing_bug_reports) — _before you report an issue_
 
+# Development
+
+Grammar changes are covered by scope tests in `test/syntax`. Each file starts with a `# SYNTAX TEST "source.ruby.rails"` header, and lines with `^` markers assert the scopes of the source line above them (see [vscode-tmgrammar-test](https://github.com/PanAeon/vscode-tmgrammar-test)). Run them with:
+
+```sh
+npm install
+npm test
+```
+
+The tests use the Ruby grammar from [textmate/ruby.tmbundle](https://github.com/textmate/ruby.tmbundle), pinned in `test/fetch-grammars` to the revision that TextMate installs.
+
 # License
 
 Copyright (c) 2006 syncPEOPLE, LLC.

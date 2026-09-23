@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "pretest": "test/fetch-grammars",
+    "test": "vscode-tmgrammar-test --grammar 'Syntaxes/Ruby on Rails.plist' --grammar test/vendor/ruby-tmbundle/Syntaxes/Ruby.plist 'test/syntax/**/*.rb'"
+  },
+  "devDependencies": {
+    "vscode-tmgrammar-test": "0.1.3"
+  }
+}
