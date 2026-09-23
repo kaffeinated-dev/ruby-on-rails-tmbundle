@@ -1,0 +1,75 @@
+## SYNTAX TEST "text.html.erb.rails" "view helpers"
+
+<%= turbo_frame_tag dom_id(@post) do %>
+##  ^^^^^^^^^^^^^^^ support.function.turbo.rails
+##                  ^^^^^^ support.function.viewhelpers.rails
+<% end %>
+<%= turbo_stream_from @post %>
+##  ^^^^^^^^^^^^^^^^^ support.function.turbo.rails
+<%= image_tag "logo.svg", alt: t(".logo") %>
+##  ^^^^^^^^^ support.function.viewhelpers.rails
+##                             ^ support.function.viewhelpers.rails
+<%= button_to "Delete", @post, method: :delete %>
+##  ^^^^^^^^^ support.function.viewhelpers.rails
+<%= time_ago_in_words @post.created_at %>
+##  ^^^^^^^^^^^^^^^^^ support.function.viewhelpers.rails
+<%= number_to_currency @post.price %>
+##  ^^^^^^^^^^^^^^^^^^ support.function.viewhelpers.rails
+<%= content_tag :span, truncate(@post.body, length: 80), class: class_names("teaser", active: @active) %>
+##  ^^^^^^^^^^^ support.function.viewhelpers.rails
+##                     ^^^^^^^^ support.function.viewhelpers.rails
+##                                                              ^^^^^^^^^^^ support.function.viewhelpers.rails
+<%= pluralize @post.comments.count, "comment" %>
+##  ^^^^^^^^^ support.function.viewhelpers.rails
+<%= sanitize @post.summary %> <%= simple_format @post.body %>
+##  ^^^^^^^^ support.function.viewhelpers.rails
+##                                ^^^^^^^^^^^^^ support.function.viewhelpers.rails
+<% if content_for?(:sidebar) || current_page?(root_path) %>
+##    ^^^^^^^^^^^^ support.function.viewhelpers.rails
+##                              ^^^^^^^^^^^^^ support.function.viewhelpers.rails
+<% end %>
+<% cache @post do %>
+## ^^^^^ support.function.viewhelpers.rails
+<% end %>
+<%= javascript_importmap_tags %> <%= csrf_meta_tags %> <%= csp_meta_tag %>
+##  ^^^^^^^^^^^^^^^^^^^^^^^^^ support.function.viewhelpers.rails
+##                                   ^^^^^^^^^^^^^^ support.function.viewhelpers.rails
+##                                                         ^^^^^^^^^^^^ support.function.viewhelpers.rails
+<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+##  ^^^^^^^^^^^^^^^^^^^ support.function.viewhelpers.rails
+
+<%= form_with model: @post do |form| %>
+##  ^^^^^^^^^ support.function.viewhelpers.rails
+  <%= form.label :title %>
+##         ^^^^^ support.function.viewhelpers.rails
+  <%= form.email_field :email %>
+##         ^^^^^^^^^^^ support.function.viewhelpers.rails
+  <%= form.select :category, Post.categories.keys %>
+##         ^^^^^^ support.function.viewhelpers.rails
+  <%= form.collection_select :author_id, User.all, :id, :name %>
+##         ^^^^^^^^^^^^^^^^^ support.function.viewhelpers.rails
+  <%= form.textarea :body %>
+##         ^^^^^^^^ support.function.viewhelpers.rails
+  <%= form.rich_textarea :content %>
+##         ^^^^^^^^^^^^^ support.function.actiontext.rails
+  <%= form.fields :address do |address_fields| %>
+##         ^^^^^^ support.function.viewhelpers.rails
+    <%= address_fields.select :country, countries %>
+##                     ^^^^^^ support.function.viewhelpers.rails
+  <% end %>
+  <%= form.submit "Save" %>
+##         ^^^^^^ support.function.viewhelpers.rails
+<% end %>
+
+## Generic names are not view helpers when used on other objects.
+<% @users.select(&:admin?).each do |user| %>
+##        ^^^^^^ - support.function.viewhelpers.rails
+  <%= user.label %>
+##         ^^^^^ - support.function.viewhelpers.rails
+<% end %>
+<% @post.tags.each do |tag| %>
+  <%= tag.name %>
+##    ^^^ - support.function.viewhelpers.rails
+<% end %>
+<% @items.each do |t| %><%= t.title %><% end %>
+##                          ^ - support.function.viewhelpers.rails

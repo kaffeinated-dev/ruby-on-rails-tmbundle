@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "pretest": "test/fetch-grammars",
-    "test": "vscode-tmgrammar-test --grammar 'Syntaxes/Ruby on Rails.plist' --grammar test/vendor/ruby-tmbundle/Syntaxes/Ruby.plist 'test/syntax/**/*.rb'"
+    "test": "vscode-tmgrammar-test --grammar 'Syntaxes/Ruby on Rails.plist' --grammar 'Syntaxes/HTML (Rails).plist' --grammar test/vendor/ruby-tmbundle/Syntaxes/Ruby.plist --grammar test/vendor/html-tmbundle/Syntaxes/HTML.plist 'test/syntax/**/*.{rb,erb}'"
   },
   "devDependencies": {
     "vscode-tmgrammar-test": "0.1.3"

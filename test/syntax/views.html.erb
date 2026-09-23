@@ -1,0 +1,9 @@
+## SYNTAX TEST "text.html.erb.rails" "views"
+
+<p><%= link_to "Posts", posts_path %></p>
+##     ^^^^^^^ meta.embedded.line.erb support.function.viewhelpers.rails
+<%= form_for @post do |f| %>
+##  ^^^^^^^^ support.function.viewhelpers.rails
+  <%= f.text_field :title %>
+##      ^^^^^^^^^^ support.function.viewhelpers.rails
+<% end %>

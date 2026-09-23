@@ -1,16 +1,18 @@
 #!/bin/sh
-# Fetch the grammars included by ‘Ruby on Rails.plist’. The Ruby grammar is
-# pinned to the revision served by TextMate’s bundle index, so tests see the
-# same source.ruby scopes as the Ruby bundle installed by TextMate.
+# Fetch the grammars included by ‘Ruby on Rails.plist’ and ‘HTML (Rails).plist’.
+# They are pinned to the revisions served by TextMate’s bundle index, so tests
+# see the same source.ruby and text.html.basic scopes as the bundles installed
+# by TextMate.
 set -e
 
-RUBY_TMBUNDLE_SHA=05698e99314d8653e2e9d8f198d3c83e387ee1eb
-dest=test/vendor/ruby-tmbundle
+fetch () { # repository, revision
+	dest="test/vendor/$1"
+	if [ "$(cat "$dest/.sha" 2>/dev/null)" != "$2" ]; then
+		rm -rf "$dest" && mkdir -p "$dest"
+		curl -fsSL "https://codeload.github.com/textmate/${1%-tmbundle}.tmbundle/tar.gz/$2" | tar -xz --strip-components=1 -C "$dest"
+		echo "$2" > "$dest/.sha"
+	fi
+}
 
-if [ "$(cat "$dest/.sha" 2>/dev/null)" = "$RUBY_TMBUNDLE_SHA" ]; then
-	exit 0
-fi
-
-rm -rf "$dest" && mkdir -p "$dest"
-curl -fsSL "https://codeload.github.com/textmate/ruby.tmbundle/tar.gz/$RUBY_TMBUNDLE_SHA" | tar -xz --strip-components=1 -C "$dest"
-echo "$RUBY_TMBUNDLE_SHA" > "$dest/.sha"
+fetch ruby-tmbundle 05698e99314d8653e2e9d8f198d3c83e387ee1eb
+fetch html-tmbundle 0c3d5ee54de3a993f747f54186b73a4d2d3c44a2
