@@ -59,6 +59,16 @@ rails_exec () {
 # Like rails_exec, but without input, so generators can’t wait for an answer.
 rails_run () { rails_exec "$@" </dev/null; }
 
+# Run the bundle’s own Ruby scripts: with macOS’s Ruby when available, as it
+# starts faster than through mise, otherwise with the application’s Ruby.
+rails_ruby () {
+	if [[ -x /usr/bin/ruby ]]; then
+		/usr/bin/ruby "$@"
+	else
+		rails_exec ruby "$@"
+	fi
+}
+
 rails_exit_tool_tip () { printf '%s' "$1"; exit 206; }
 rails_exit_discard  () { exit 200; }
 
