@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+. "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
+rails_require_root
+
+# The command input is the migration, so unsaved changes are included.
+list=$(rails_exec ruby "$TM_BUNDLE_SUPPORT/bin/model_generator_args.rb" "${TM_LINE_NUMBER:-0}") || rails_exit_tool_tip "$list"
+args=()
+while IFS= read -r line; do
+	[[ -n "$line" ]] &amp;&amp; args+=("$line")
+done &lt;&lt;&lt; "$list"
+
+# --skip and --skip-collision-check leave an existing model untouched.
+output=$(rails_run bin/rails generate model "${args[@]}" --no-migration --skip-collision-check --skip 2&gt;&amp;1)
+rc=$?
+model=$(printf '%s\n' "$output" | sed -E -n 's/^ *(create|identical|skip) +(app\/models\/[^ ]+\.rb)$/\2/p' | head -n 1)
+
+if [[ $rc -eq 0 &amp;&amp; -n "$model" ]]; then
+	rails_open "$model"
+	created=$(printf '%s\n' "$output" | sed -E -n 's/^ *create +//p')
+	skipped=$(printf '%s\n' "$output" | sed -E -n 's/^ *(skip|identical) +//p')
+	message=""
+	[[ -n "$created" ]] &amp;&amp; message+=$'Created:\n'"$created"
+	[[ -n "$created" &amp;&amp; -n "$skipped" ]] &amp;&amp; message+=$'\n\n'
+	[[ -n "$skipped" ]] &amp;&amp; message+=$'Already existed:\n'"$skipped"
+	rails_exit_tool_tip "$message"
+fi
+
+rails_html_header "Generate Model from Migration" "bin/rails generate model ${args[*]} --no-migration --skip-collision-check --skip"
+printf '%s\n' "$output" | rails_html_escape
+rails_html_footer "$rc" "No model was generated."
+exit 205
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>^|</string>
+	<key>name</key>
+	<string>Generate Model from Migration</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.ruby.rails</string>
+	<key>uuid</key>
+	<string>F48437D7-FD36-4456-8FF5-2E580BC9E519</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
