@@ -9,7 +9,8 @@
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
 rails_require_root
 
-rails_html_task "Test All" test
+[[ -d "$RAILS_ROOT/test/system" ]] || rails_exit_tool_tip "This application has no system tests (test/system)."
+rails_html_task "Test System" test:system
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -18,7 +19,7 @@ rails_html_task "Test All" test
 	<key>keyEquivalent</key>
 	<string>^\</string>
 	<key>name</key>
-	<string>Test All</string>
+	<string>Test System</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -28,7 +29,7 @@ rails_html_task "Test All" test
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
-	<string>DC549A45-D9B0-11DC-94E9-00112475D960</string>
+	<string>6003BA74-5D7C-4C18-B615-C79506762EA5</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>

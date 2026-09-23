@@ -252,12 +252,13 @@
 				<key>items</key>
 				<array>
 					<string>DC549A45-D9B0-11DC-94E9-00112475D960</string>
+					<string>35233B9D-E361-4647-9014-94A72C63ACBD</string>
+					<string>037F8499-A70C-4051-851C-D7887934B3D8</string>
+					<string>------------------------------------</string>
+					<string>2C60CBA1-D9B1-11DC-94E9-00112475D960</string>
 					<string>F4EA552D-D9B0-11DC-94E9-00112475D960</string>
 					<string>04A30A4D-D9B1-11DC-94E9-00112475D960</string>
-					<string>0D966168-D9B1-11DC-94E9-00112475D960</string>
-					<string>190401C2-D9B1-11DC-94E9-00112475D960</string>
-					<string>212C3047-D9B1-11DC-94E9-00112475D960</string>
-					<string>2C60CBA1-D9B1-11DC-94E9-00112475D960</string>
+					<string>6003BA74-5D7C-4C18-B615-C79506762EA5</string>
 				</array>
 				<key>name</key>
 				<string>Run Tests</string>

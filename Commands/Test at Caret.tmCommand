@@ -9,7 +9,9 @@
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
 rails_require_root
 
-rails_html_task "Test All" test
+file=${TM_FILEPATH#"$RAILS_ROOT"/}
+[[ "$file" == test/*_test.rb ]] || rails_exit_tool_tip "Test at Caret runs the test around the caret, so it only works in a test file."
+rails_html_task "Test ${file##*/}:$TM_LINE_NUMBER" test "$file:$TM_LINE_NUMBER"
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -18,7 +20,7 @@ rails_html_task "Test All" test
 	<key>keyEquivalent</key>
 	<string>^\</string>
 	<key>name</key>
-	<string>Test All</string>
+	<string>Test at Caret</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -28,7 +30,7 @@ rails_html_task "Test All" test
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
-	<string>DC549A45-D9B0-11DC-94E9-00112475D960</string>
+	<string>037F8499-A70C-4051-851C-D7887934B3D8</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>

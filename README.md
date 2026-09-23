@@ -10,11 +10,13 @@ You can install this bundle in TextMate by opening the preferences and going to 
 
 # Commands
 
-The migration commands run `bin/rails` in the Rails application of the current file (the closest directory with `bin/rails`), using the application’s Ruby version: through [mise](https://mise.jdx.dev) when it is installed, otherwise with the `PATH` from TextMate’s Preferences → Variables. If mise is installed somewhere unusual, set `TM_MISE` to its path in Preferences → Variables.
+The commands run `bin/rails` in the Rails application of the current file (the closest directory with `bin/rails`), using the application’s Ruby version: through [mise](https://mise.jdx.dev) when it is installed, otherwise with the `PATH` from TextMate’s Preferences → Variables. If mise is installed somewhere unusual, set `TM_MISE` to its path in Preferences → Variables.
 
 * **Create Migration…** (⌃⇧M): asks for the migration name, optionally followed by columns (`AddEmailToUsers email:string:index`), runs `bin/rails generate migration`, and opens the new migration.
 * **Migrate**, **Rollback**, **Redo Last Migration**, **Migrate to Version…**, and **Migration Status** (⌃|): run the corresponding `db:migrate` tasks and show the output in a window.
 * **Generate Model from Migration** (⌃|): in a migration that creates a table, runs `bin/rails generate model` with the table’s columns (without creating another migration) and opens the model. Existing files are left untouched.
+* **Test All**, **Test Current File**, **Test at Caret**, **Test Models**, **Test Controllers**, **Test Integration**, and **Test System** (⌃\\): run `bin/rails test` for everything, the current file’s test (`app/models/user.rb` → `test/models/user_test.rb`), the test around the caret, or a group of tests.
+* **Load Fixtures**, **Load Schema into Database**, **Dump Schema from Database**, and **Prepare Test Database** (⌃|): run the corresponding `db:` tasks. Loading fixtures or the schema into the development database asks for confirmation first.
 
 The commands only use the shell and the application’s Ruby, as TextMate’s Ruby support library can’t be loaded on Apple silicon.
 
