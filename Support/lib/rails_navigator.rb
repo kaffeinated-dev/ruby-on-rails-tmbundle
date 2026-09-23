@@ -121,6 +121,16 @@ module RailsNavigator
     end
   end
 
+  # The Rails root of «path»: the closest directory with bin/rails, or nil.
+  def self.root_for(path)
+    dir = File.expand_path(File.directory?(path.to_s) ? path.to_s : File.dirname(path.to_s))
+    until dir == "/"
+      return dir if File.file?(File.join(dir, "bin", "rails"))
+      dir = File.dirname(dir)
+    end
+    nil
+  end
+
   # The name of the method whose definition precedes «line» (1-based), e.g.
   # the controller action the caret is in.
   def self.method_at(source, line)
