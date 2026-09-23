@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>saveModifiedFiles</string>
+	<string>nop</string>
 	<key>command</key>
 	<string>#!/bin/bash
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
 rails_require_root
 
-rails_html_task "Redo Last Migration" db:migrate:redo
+rails_html_task "Migration Status" db:migrate:status
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -18,7 +18,7 @@ rails_html_task "Redo Last Migration" db:migrate:redo
 	<key>keyEquivalent</key>
 	<string>^|</string>
 	<key>name</key>
-	<string>Redo Last Migration</string>
+	<string>Migration Status</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -28,7 +28,7 @@ rails_html_task "Redo Last Migration" db:migrate:redo
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
-	<string>CFDA9F62-D071-4E0F-AD10-66AE0729FFCF</string>
+	<string>E5DB32C6-250C-4003-BB7E-FD3556DF0838</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>
