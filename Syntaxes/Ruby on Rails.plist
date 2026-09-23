@@ -80,15 +80,19 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(^\s*)(?=class\s+(([.a-zA-Z0-9_:]+(\s*&lt;\s*ActionMailer::Base))))</string>
+			<string>(^\s*)(?=class\s+[.a-zA-Z0-9_:]+\s*&lt;\s*(ActionMailer::Base\b|[.a-zA-Z0-9_:]*Mailer(?![\w:])))</string>
 			<key>comment</key>
-			<string>Uses lookahead to match classes that inherit from ActionMailer::Base; includes 'source.ruby' to avoid infinite recursion</string>
+			<string>Uses lookahead to match classes that inherit from ActionMailer::Base or a class ending in Mailer (e.g. ApplicationMailer); includes 'source.ruby' to avoid infinite recursion</string>
 			<key>end</key>
 			<string>^\1(?=end)\b</string>
 			<key>name</key>
 			<string>meta.rails.mailer</string>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>include</key>
+					<string>#mailer-methods</string>
+				</dict>
 				<dict>
 					<key>include</key>
 					<string>source.ruby</string>
@@ -295,6 +299,12 @@
 		</dict>
 		<dict>
 			<key>match</key>
+			<string>(?&lt;!\.)\b(after_deliver|around_deliver|before_deliver)\b(?![?!:])</string>
+			<key>name</key>
+			<string>support.function.actionmailer.rails</string>
+		</dict>
+		<dict>
+			<key>match</key>
 			<string>\b(check_box|content_for|error_messages_for|form_for|fields_for|file_field|hidden_field|image_submit_tag|label|link_to|password_field|radio_button|submit|text_field|text_area)\b(?!:)</string>
 			<key>name</key>
 			<string>support.function.viewhelpers.rails</string>
@@ -348,6 +358,18 @@
 			<string>source.ruby</string>
 		</dict>
 	</array>
+	<key>repository</key>
+	<dict>
+		<key>mailer-methods</key>
+		<dict>
+			<key>comment</key>
+			<string>These are also common names, so they are only matched inside mailers.</string>
+			<key>match</key>
+			<string>(?&lt;!\.)\b(attachments|default|email_address_with_name|headers|mail)\b(?![?!:])</string>
+			<key>name</key>
+			<string>support.function.actionmailer.rails</string>
+		</dict>
+	</dict>
 	<key>scopeName</key>
 	<string>source.ruby.rails</string>
 	<key>uuid</key>
