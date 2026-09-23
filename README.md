@@ -17,7 +17,9 @@ npm install
 npm test
 ```
 
-The tests use the Ruby grammar from [textmate/ruby.tmbundle](https://github.com/textmate/ruby.tmbundle), pinned in `test/fetch-grammars` to the revision that TextMate installs.
+The tests use the Ruby and HTML grammars from [textmate/ruby.tmbundle](https://github.com/textmate/ruby.tmbundle) and [textmate/html.tmbundle](https://github.com/textmate/html.tmbundle), pinned in `test/fetch-grammars` to the revisions that TextMate installs.
+
+ERB tests (`*.erb`) use `##` as the assertion prefix, as HTML has no line comments; these lines are plain text to the HTML grammar.
 
 # License
 
