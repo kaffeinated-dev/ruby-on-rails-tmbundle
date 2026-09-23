@@ -5,24 +5,32 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env bash
-. "$TM_BUNDLE_SUPPORT/lib/rvm/rvm_textmate"
+	<string>#!/bin/bash
+. "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
+rails_require_root
+export RAILS_ROOT
 
-export RUBYLIB="$TM_BUNDLE_SUPPORT/lib:$RUBYLIB"
-"${TM_RUBY:=ruby}" -- "${TM_BUNDLE_SUPPORT}/bin/list_columns.rb"</string>
-	<key>fallbackInput</key>
-	<string>word</string>
+rails_ruby "$TM_BUNDLE_SUPPORT/bin/navigate.rb" columns
+</string>
 	<key>input</key>
-	<string>selection</string>
+	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>keyEquivalent</key>
 	<string>~ </string>
 	<key>name</key>
-	<string>List columns of a model</string>
-	<key>output</key>
+	<string>List Columns of Model</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
 	<string>discard</string>
 	<key>scope</key>
 	<string>source.ruby.rails</string>
 	<key>uuid</key>
 	<string>CF489B31-5DD2-4B83-B503-AD3ECF7BDEB7</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>

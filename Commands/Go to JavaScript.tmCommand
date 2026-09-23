@@ -10,7 +10,7 @@
 rails_require_root
 export RAILS_ROOT
 
-rails_ruby "$TM_BUNDLE_SUPPORT/bin/navigate.rb" go_to fixture
+rails_ruby "$TM_BUNDLE_SUPPORT/bin/navigate.rb" go_to javascript
 </string>
 	<key>input</key>
 	<string>document</string>
@@ -19,7 +19,7 @@ rails_ruby "$TM_BUNDLE_SUPPORT/bin/navigate.rb" go_to fixture
 	<key>keyEquivalent</key>
 	<string>~$@</string>
 	<key>name</key>
-	<string>Go to Fixture</string>
+	<string>Go to JavaScript</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -27,9 +27,9 @@ rails_ruby "$TM_BUNDLE_SUPPORT/bin/navigate.rb" go_to fixture
 	<key>outputLocation</key>
 	<string>discard</string>
 	<key>scope</key>
-	<string>meta.rails.controller, meta.rails.helper, meta.rails.model, meta.rails.unit_test, meta.rails.functional_test</string>
+	<string>text.html.erb.rails, source.ruby.rails.embedded.html, meta.rails.controller, meta.rails.helper, text.haml</string>
 	<key>uuid</key>
-	<string>638D94A4-BDFC-4FE9-8909-9934F3FD2899</string>
+	<string>B078346F-61D8-4E75-9427-80720FBC67F7</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>
