@@ -17,6 +17,11 @@ The commands run `bin/rails` in the Rails application of the current file (the c
 * **Generate Model from Migration** (⌃|): in a migration that creates a table, runs `bin/rails generate model` with the table’s columns (without creating another migration) and opens the model. Existing files are left untouched.
 * **Test All**, **Test Current File**, **Test at Caret**, **Test Models**, **Test Controllers**, **Test Integration**, and **Test System** (⌃\\): run `bin/rails test` for everything, the current file’s test (`app/models/user.rb` → `test/models/user_test.rb`), the test around the caret, or a group of tests.
 * **Load Fixtures**, **Load Schema into Database**, **Dump Schema from Database**, and **Prepare Test Database** (⌃|): run the corresponding `db:` tasks. Loading fixtures or the schema into the development database asks for confirmation first.
+* **Alternate File** (⌥⌘↓): switches between a controller action and its view, and between a file and its test (`app/models/post.rb` ↔ `test/models/post_test.rb`, `app/jobs/…` ↔ `test/jobs/…`).
+* **Go to Controller**, **Model**, **View**, **Helper**, **Controller Test**, **Model Test**, **Fixture**, **JavaScript**, and **Stylesheet** (⌥⇧⌘↓): open the related file of the current resource. Missing files can be created, views ask for their name.
+* **File on Current Line** (⌥⌘↑): opens the partial, template, or layout rendered on the current line, the asset of a `stylesheet_link_tag`, `javascript_include_tag`, or `image_tag`, or the file of a `require_relative`.
+* **Show DB Schema for Current Class** (⌃⇧⌘S) and **List Columns of Model** (⌥Space): show the columns of the model at the caret from `db/schema.rb`, or insert one of its columns or associations.
+* **Jump to Method Definition** (⌃F): opens the definition of the method, class, association, or instance variable at the caret in `app`, `lib`, `config`, or `test`.
 
 The commands only use the shell and the application’s Ruby, as TextMate’s Ruby support library can’t be loaded on Apple silicon.
 
@@ -29,7 +34,7 @@ npm install
 npm test
 ```
 
-The command helpers have tests too: `ruby test/commands/model_generator_args_test.rb`.
+The command helpers have tests too: `ruby test/commands/model_generator_args_test.rb` and `ruby test/commands/rails_navigator_test.rb`.
 
 The tests use the Ruby and HTML grammars from [textmate/ruby.tmbundle](https://github.com/textmate/ruby.tmbundle) and [textmate/html.tmbundle](https://github.com/textmate/html.tmbundle), pinned in `test/fetch-grammars` to the revisions that TextMate installs.
 

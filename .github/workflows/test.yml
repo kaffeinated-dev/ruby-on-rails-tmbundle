@@ -28,3 +28,4 @@ jobs:
       run: |
         bash -n Support/lib/rails_commands.sh
         ruby test/commands/model_generator_args_test.rb
+        ruby test/commands/rails_navigator_test.rb

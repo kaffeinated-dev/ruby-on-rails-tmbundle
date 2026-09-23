@@ -5,20 +5,32 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>export RUBYLIB="$TM_BUNDLE_SUPPORT/lib:$RUBYLIB"
-"ruby18" -- "${TM_BUNDLE_SUPPORT}/bin/show_schema.rb"
+	<string>#!/bin/bash
+. "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
+rails_require_root
+export RAILS_ROOT
+
+rails_ruby "$TM_BUNDLE_SUPPORT/bin/navigate.rb" schema
 </string>
 	<key>input</key>
 	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>keyEquivalent</key>
 	<string>^@S</string>
 	<key>name</key>
 	<string>Show DB Schema for Current Class</string>
-	<key>output</key>
-	<string>showAsTooltip</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>discard</string>
 	<key>scope</key>
 	<string>source.ruby.rails</string>
 	<key>uuid</key>
 	<string>1970AE74-3949-40B3-B263-727AA3FF167A</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>
