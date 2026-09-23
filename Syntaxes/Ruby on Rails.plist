@@ -169,6 +169,14 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>#table-methods</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#migration-methods</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>source.ruby</string>
 						</dict>
 						<dict>
@@ -190,6 +198,14 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>#table-methods</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#migration-methods</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>source.ruby</string>
 						</dict>
 						<dict>
@@ -197,6 +213,10 @@
 							<string>$self</string>
 						</dict>
 					</array>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#migration-methods</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -230,6 +250,14 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>#table-methods</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#migration-methods</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>source.ruby</string>
 						</dict>
 						<dict>
@@ -237,6 +265,10 @@
 							<string>$self</string>
 						</dict>
 					</array>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#migration-methods</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -395,6 +427,24 @@
 			<string>(?&lt;!\.)\b(attachments|default|email_address_with_name|headers|mail)\b(?![?!:])</string>
 			<key>name</key>
 			<string>support.function.actionmailer.rails</string>
+		</dict>
+		<key>migration-methods</key>
+		<dict>
+			<key>comment</key>
+			<string>Schema statements and migration methods (ActiveRecord::Migration::CommandRecorder). Only matched in migrations and schema.rb.</string>
+			<key>match</key>
+			<string>(?&lt;!\.)\b(?:(add_belongs_to|add_check_constraint|add_column|add_enum_value|add_exclusion_constraint|add_foreign_key|add_index|add_reference|add_timestamps|add_unique_constraint|change_column|change_column_comment|change_column_default|change_column_null|change_table|change_table_comment|create_enum|create_join_table|create_schema|create_table|create_virtual_table|disable_extension|disable_index|drop_enum|drop_join_table|drop_schema|drop_table|drop_virtual_table|enable_extension|enable_index|execute|remove_belongs_to|remove_check_constraint|remove_column|remove_columns|remove_exclusion_constraint|remove_foreign_key|remove_index|remove_reference|remove_timestamps|remove_unique_constraint|rename_column|rename_enum|rename_enum_value|rename_index|rename_table|reversible|revert|say|say_with_time|suppress_messages|up_only)\b(?![?!:])|disable_ddl_transaction!)</string>
+			<key>name</key>
+			<string>support.function.activerecord.migration.rails</string>
+		</dict>
+		<key>table-methods</key>
+		<dict>
+			<key>comment</key>
+			<string>Column and index methods called on the table in create_table and change_table blocks, including PostgreSQL and MySQL column types.</string>
+			<key>match</key>
+			<string>(?&lt;=\.)(belongs_to|bigint|bigserial|binary|bit|bit_varying|blob|boolean|box|change|change_default|change_null|check_constraint|cidr|circle|citext|column|date|daterange|datetime|decimal|enum|exclusion_constraint|float|foreign_key|hstore|index|inet|int4range|int8range|integer|interval|json|jsonb|line|longblob|longtext|lseg|ltree|macaddr|mediumblob|mediumtext|money|numeric|numrange|oid|path|point|polygon|primary_key|references|remove|remove_belongs_to|remove_check_constraint|remove_exclusion_constraint|remove_foreign_key|remove_index|remove_references|remove_timestamps|remove_unique_constraint|rename|rename_index|serial|string|text|time|timestamp|timestamps|timestamptz|tinyblob|tinytext|tsrange|tstzrange|tsvector|unique_constraint|unsigned_bigint|unsigned_integer|uuid|virtual|xml)\b(?![?!:])</string>
+			<key>name</key>
+			<string>support.function.activerecord.migration.rails</string>
 		</dict>
 	</dict>
 	<key>scopeName</key>
