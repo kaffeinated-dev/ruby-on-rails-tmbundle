@@ -95,6 +95,14 @@ rails_menu () {
 	printf '%s' "$result" | /usr/bin/plutil -extract value raw -o - - 2>/dev/null
 }
 
+# Ask for confirmation in a warning alert: title, message, button title.
+# Returns 0 when the button was clicked.
+rails_confirm () {
+	local result
+	result=$("$DIALOG" alert --alertStyle warning --title "$1" --body "$2" --button1 "$3" --button2 Cancel)
+	[[ "$(printf '%s' "$result" | /usr/bin/plutil -extract buttonClicked raw -o - - 2>/dev/null)" == 0 ]]
+}
+
 # Print the test for the current file, relative to RAILS_ROOT: the file itself
 # when it is a test, otherwise its test (app/models/user.rb → test/models/user_test.rb).
 rails_test_file () {

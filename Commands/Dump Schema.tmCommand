@@ -9,7 +9,7 @@
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
 rails_require_root
 
-rails_html_task "Load Fixtures (Test DB)" db:fixtures:load RAILS_ENV=test
+rails_html_task "Dump Schema" db:schema:dump
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -18,7 +18,7 @@ rails_html_task "Load Fixtures (Test DB)" db:fixtures:load RAILS_ENV=test
 	<key>keyEquivalent</key>
 	<string>^|</string>
 	<key>name</key>
-	<string>Load Fixtures (Test DB)</string>
+	<string>Dump Schema from Database</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -28,7 +28,7 @@ rails_html_task "Load Fixtures (Test DB)" db:fixtures:load RAILS_ENV=test
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
-	<string>F758BFD1-00CA-4742-BE71-032580080F5C</string>
+	<string>310C901C-EF32-4E88-938A-804ABBF8C428</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>
