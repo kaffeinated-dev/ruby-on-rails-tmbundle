@@ -95,6 +95,20 @@ rails_menu () {
 	printf '%s' "$result" | /usr/bin/plutil -extract value raw -o - - 2>/dev/null
 }
 
+# Print the test for the current file, relative to RAILS_ROOT: the file itself
+# when it is a test, otherwise its test (app/models/user.rb → test/models/user_test.rb).
+rails_test_file () {
+	local file=${TM_FILEPATH#"$RAILS_ROOT"/} test
+	case "$file" in
+		test/*_test.rb) echo "$file"; return 0 ;;
+		app/*.rb)       test="test/${file#app/}" ;;
+		lib/*.rb)       test="test/$file" ;;
+		*)              return 1 ;;
+	esac
+	test="${test%.rb}_test.rb"
+	[[ -f "$RAILS_ROOT/$test" ]] && echo "$test"
+}
+
 # Open a file (relative to RAILS_ROOT or absolute) in TextMate.
 rails_open () {
 	local file=$1

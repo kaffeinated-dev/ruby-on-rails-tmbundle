@@ -9,7 +9,9 @@
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
 rails_require_root
 
-rails_html_task "Test All" test
+test=$(rails_test_file) || rails_exit_tool_tip "There is no test for this file."
+[[ -n "$test" ]] || rails_exit_tool_tip "There is no test for this file."
+rails_html_task "Test ${test##*/}" test "$test"
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -18,7 +20,7 @@ rails_html_task "Test All" test
 	<key>keyEquivalent</key>
 	<string>^\</string>
 	<key>name</key>
-	<string>Test All</string>
+	<string>Test Current File</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
@@ -28,7 +30,7 @@ rails_html_task "Test All" test
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
-	<string>DC549A45-D9B0-11DC-94E9-00112475D960</string>
+	<string>35233B9D-E361-4647-9014-94A72C63ACBD</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>

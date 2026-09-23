@@ -3,24 +3,33 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>nop</string>
+	<string>saveModifiedFiles</string>
 	<key>command</key>
-	<string>#!/usr/bin/env bash
-. "$TM_BUNDLE_SUPPORT/lib/rvm/rvm_textmate"
+	<string>#!/bin/bash
+. "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
+rails_require_root
 
-export RUBYLIB="$TM_BUNDLE_SUPPORT/lib:$RUBYLIB"
-"ruby18" -- "${TM_BUNDLE_SUPPORT}/bin/rake_helper.rb" test:functionals</string>
+rails_html_task "Test Controllers" test:controllers
+</string>
 	<key>input</key>
 	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>keyEquivalent</key>
 	<string>^\</string>
 	<key>name</key>
-	<string>Test Functionals</string>
-	<key>output</key>
-	<string>showAsHTML</string>
+	<string>Test Controllers</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>html</string>
+	<key>outputLocation</key>
+	<string>newWindow</string>
 	<key>scope</key>
 	<string>source.ruby.rails, source.yaml</string>
 	<key>uuid</key>
 	<string>F4EA552D-D9B0-11DC-94E9-00112475D960</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>
