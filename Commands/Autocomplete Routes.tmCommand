@@ -5,24 +5,53 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env bash
-. "$TM_BUNDLE_SUPPORT/lib/rvm/rvm_textmate"
+	<string>#!/bin/bash
+. "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
+rails_require_root
+export RAILS_ROOT
 
-export RUBYLIB="$TM_BUNDLE_SUPPORT/lib:$RUBYLIB"
-"${TM_RUBY:=ruby}" -- "${TM_BUNDLE_SUPPORT}/bin/routes_auto_complete.rb"</string>
-	<key>fallbackInput</key>
-	<string>word</string>
+# Listing the routes starts the application, so they are cached until a
+# routes file changes.
+cache="${TMPDIR:-/tmp}/textmate-rails-routes-$(printf '%s' "$RAILS_ROOT" | /sbin/md5 -q).txt"
+if [[ ! -s "$cache" || -n "$(find "$RAILS_ROOT/config/routes.rb" "$RAILS_ROOT/config/routes" -newer "$cache" 2&gt;/dev/null | head -n 1)" ]]; then
+	if ! rails_run_with_timeout 60 bin/rails runner 'Rails.application.reload_routes!; puts Rails.application.routes.named_routes.names.sort' &gt; "$cache.new" 2&gt;/dev/null; then
+		rm -f "$cache.new"
+		rails_exit_tool_tip "Could not list the routes of this application (bin/rails runner failed or took longer than a minute)."
+	fi
+	mv "$cache.new" "$cache"
+fi
+
+typed=$(printf '%s' "${TM_CURRENT_LINE:0:${TM_LINE_INDEX:-0}}" | grep -oE '[A-Za-z0-9_]+$')
+suggestions="("
+while IFS= read -r name; do
+	[[ "$name" =~ ^[a-z_][a-z0-9_]*$ ]] || continue
+	# Routes Rails and its frameworks add for themselves.
+	[[ "$name" =~ ^(rails_(info|mailers|conductor|blob|direct_uploads|disk_service|service_blob|storage|representation|relay|incoming|inbound|mandrill|mailgun|postmark|sendgrid|mailbox)|update_rails_disk_service|turbo_(recede|refresh|resume)_) ]] &amp;&amp; continue
+	suggestions+="{ display = \"${name}_path\"; }, { display = \"${name}_url\"; }, "
+done &lt; "$cache"
+[[ "$suggestions" != "(" ]] || rails_exit_tool_tip "This application has no named routes."
+"$DIALOG" popup --suggestions "$suggestions)" --alreadyTyped "$typed" --additionalWordCharacters "_" &gt;/dev/null
+rails_exit_discard
+</string>
 	<key>input</key>
-	<string>selection</string>
+	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>~</string>
 	<key>name</key>
 	<string>Autocomplete Routes</string>
-	<key>output</key>
-	<string>replaceSelectedText</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>discard</string>
 	<key>scope</key>
-	<string>source.ruby.rails</string>
-	<key>tabTrigger</key>
-	<string>routesrc</string>
+	<string>source.ruby.rails, text.html.erb.rails</string>
 	<key>uuid</key>
 	<string>0742F232-38ED-4C52-AD68-1858F0F2C601</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>

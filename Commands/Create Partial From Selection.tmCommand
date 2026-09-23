@@ -3,32 +3,35 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>nop</string>
+	<string>saveModifiedFiles</string>
 	<key>command</key>
 	<string>#!/bin/bash
 . "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
-RAILS_ROOT=$(rails_root)
+rails_require_root
+export RAILS_ROOT
 
-rails_ruby "$TM_BUNDLE_SUPPORT/bin/documentation.rb"
+rails_ruby "$TM_BUNDLE_SUPPORT/bin/partial.rb"
 </string>
+	<key>fallbackInput</key>
+	<string>document</string>
 	<key>input</key>
-	<string>none</string>
+	<string>selection</string>
 	<key>inputFormat</key>
 	<string>text</string>
 	<key>keyEquivalent</key>
-	<string>^h</string>
+	<string>^H</string>
 	<key>name</key>
-	<string>Documentation for Word</string>
+	<string>Create Partial From Selection</string>
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
 	<string>text</string>
 	<key>outputLocation</key>
-	<string>discard</string>
+	<string>replaceInput</string>
 	<key>scope</key>
 	<string>source.ruby.rails, text.html.erb.rails, text.haml</string>
 	<key>uuid</key>
-	<string>32F30207-D827-46D9-889A-451C35269D52</string>
+	<string>1DD8A214-1C97-45BA-ADEE-8F888DDE8570</string>
 	<key>version</key>
 	<integer>2</integer>
 </dict>

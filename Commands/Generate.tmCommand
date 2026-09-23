@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveModifiedFiles</string>
+	<key>command</key>
+	<string>#!/bin/bash
+. "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
+rails_require_root
+export RAILS_ROOT
+
+# The application’s generators, grouped as listed by bin/rails generate --help.
+items=()
+while IFS= read -r line; do
+	if [[ "$line" == "  "* ]]; then
+		items+=("${line#  }" "${line#  }")
+	elif [[ -n "$line" &amp;&amp; ${#items[@]} -gt 0 ]]; then
+		items+=("-" "-")
+	fi
+done &lt; &lt;(rails_run_with_timeout 60 bin/rails generate --help 2&gt;/dev/null | sed -n '/^Please choose a generator below/,$p' | sed 1d)
+[[ ${#items[@]} -gt 0 ]] || rails_exit_tool_tip "Could not list the generators of this application (bin/rails generate --help failed)."
+
+generator=$(rails_menu "${items[@]}") || rails_exit_discard
+case "$generator" in
+	scaffold|resource)              example="Post title:string body:text" ;;
+	model)                          example="Post title:string author:references" ;;
+	controller|scaffold_controller) example="Posts index show" ;;
+	migration)                      example="AddEmailToUsers email:string:index" ;;
+	job)                            example="ExportPosts" ;;
+	mailer)                         example="Notifications welcome" ;;
+	*)                              example="" ;;
+esac
+input=$(rails_request_string "Generate $generator" "Arguments for bin/rails generate $generator${example:+ (e.g. $example)}:" "" "Generate") || rails_exit_discard
+read -r -a args &lt;&lt;&lt; "$input"
+
+# --skip keeps existing files, as there is no way to answer when asked to overwrite one.
+rails_html_header "Generate $generator" "bin/rails generate $generator $input --skip"
+rails_run bin/rails generate "$generator" "${args[@]}" --skip 2&gt;&amp;1 | rails_html_escape | rails_html_link_files
+rails_html_footer "${PIPESTATUS[0]}"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>^|</string>
+	<key>name</key>
+	<string>Generate…</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>html</string>
+	<key>outputLocation</key>
+	<string>newWindow</string>
+	<key>scope</key>
+	<string>source.ruby.rails, source.yaml</string>
+	<key>uuid</key>
+	<string>4904EDC7-5ED3-4132-AAB2-C2AD87C97EFE</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>

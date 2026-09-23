@@ -5,21 +5,34 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>export RUBYLIB="$TM_BUNDLE_SUPPORT/lib:$RUBYLIB"
-"ruby18" -- "${TM_BUNDLE_SUPPORT}/bin/fixture_auto_complete.rb" </string>
+	<string>#!/bin/bash
+. "$TM_BUNDLE_SUPPORT/lib/rails_commands.sh"
+rails_require_root
+export RAILS_ROOT
+
+rails_ruby "$TM_BUNDLE_SUPPORT/bin/fixture_complete.rb"
+</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>
 	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>keyEquivalent</key>
 	<string>~</string>
 	<key>name</key>
 	<string>Autocomplete Foreign Key Fixture Reference</string>
-	<key>output</key>
-	<string>insertAsSnippet</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>replaceInput</string>
 	<key>scope</key>
 	<string>source.yaml, meta.rails.unit_test, meta.rails.functional_test</string>
 	<key>uuid</key>
 	<string>0BCF0EE2-35EE-4959-A771-E74D55271D5A</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>
