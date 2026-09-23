@@ -246,9 +246,9 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(^\s*)\w*::Application.routes.draw|(^\s*)\w*::Application.routes.draw|(^\s*)ActionController::Routing::Routes</string>
+			<string>(^\s*)(?=(Rails\.application|[\w:]*::(Application|Engine))\.routes\.draw\b|ActionController::Routing::Routes\b)</string>
 			<key>comment</key>
-			<string>Uses ::Application.routes.draw to determine it is a routes file; includes 'source.ruby' to avoid infinite recursion</string>
+			<string>Uses lookahead to match Rails.application.routes.draw (or ::Application / ::Engine .routes.draw) to determine it is a routes file; includes 'source.ruby' to avoid infinite recursion</string>
 			<key>end</key>
 			<string>^\1(?=end)\b</string>
 			<key>name</key>
