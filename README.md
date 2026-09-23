@@ -22,6 +22,13 @@ The commands run `bin/rails` in the Rails application of the current file (the c
 * **File on Current Line** (⌥⌘↑): opens the partial, template, or layout rendered on the current line, the asset of a `stylesheet_link_tag`, `javascript_include_tag`, or `image_tag`, or the file of a `require_relative`.
 * **Show DB Schema for Current Class** (⌃⇧⌘S) and **List Columns of Model** (⌥Space): show the columns of the model at the caret from `db/schema.rb`, or insert one of its columns or associations.
 * **Jump to Method Definition** (⌃F): opens the definition of the method, class, association, or instance variable at the caret in `app`, `lib`, `config`, or `test`.
+* **Generate…** (⌃|): choose one of the application’s generators, enter its arguments, and see what was generated, with links to the new files. Existing files are kept.
+* **Create Partial From Selection** (⌃⇧H): moves the selected part of a view to a new partial and renders it instead. Without a selection, shows the partials rendered by the view inline for editing; run it again to write them back.
+* **Autocomplete Routes** (⌥⎋): completes route helpers (`posts_path`, `edit_post_url`, …) in controllers and views. The routes are cached until a routes file changes.
+* **Autocomplete Foreign Key Fixture Reference** (⌥⎋): completes fixture labels, e.g. `author: da` in a fixture or `users(:da` in a test. The **(List)** variant (⌥⇧⎋) adds to a list, e.g. `tags: ruby, ra`.
+* **Documentation for Word** (⌃H): opens the Rails API documentation for the method or class at the caret, looked up in the api.rubyonrails.org search index.
+* **Help** (⌃H): shows this list of commands.
+* Migration tab triggers `mcol`, `mind`, and `mtab`: insert a column, index, or table change. In migrations with a `down` method, the reverse is inserted there. Choosing *Remove / Add Column* or *Drop / Create Table* and pressing tab twice on the placeholder completes the line from `db/schema.rb`, making it reversible in a `change` method.
 
 The commands only use the shell and the application’s Ruby, as TextMate’s Ruby support library can’t be loaded on Apple silicon.
 
@@ -34,7 +41,7 @@ npm install
 npm test
 ```
 
-The command helpers have tests too: `ruby test/commands/model_generator_args_test.rb` and `ruby test/commands/rails_navigator_test.rb`.
+The command helpers have tests too, e.g. `ruby test/commands/rails_navigator_test.rb` (see `test/commands`).
 
 The tests use the Ruby and HTML grammars from [textmate/ruby.tmbundle](https://github.com/textmate/ruby.tmbundle) and [textmate/html.tmbundle](https://github.com/textmate/html.tmbundle), pinned in `test/fetch-grammars` to the revisions that TextMate installs.
 
