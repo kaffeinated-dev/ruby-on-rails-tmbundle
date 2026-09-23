@@ -30,10 +30,15 @@ class PostsController < ApplicationController
   end
 end
 
-# Form builder methods are still highlighted when called on the builder.
-form_for @post do |f|
-  f.label :title
-#   ^^^^^ support.function.viewhelpers.rails
-  f.text_field :title
-#   ^^^^^^^^^^ support.function.viewhelpers.rails
+# Form builder methods are still highlighted when called on the builder
+# (generic names like ‘label’ only in templates and helpers).
+module PostsHelper
+  def post_form(post)
+    form_for post do |f|
+      f.label :title
+#       ^^^^^ support.function.viewhelpers.rails
+      f.text_field :title
+#       ^^^^^^^^^^ support.function.viewhelpers.rails
+    end
+  end
 end

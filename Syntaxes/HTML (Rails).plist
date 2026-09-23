@@ -178,6 +178,10 @@
 						</dict>
 						<dict>
 							<key>include</key>
+							<string>source.ruby.rails#view-helpers</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>source.ruby.rails</string>
 						</dict>
 					</array>
@@ -227,6 +231,10 @@
 							<string>(#).*?(?=-?%&gt;)</string>
 							<key>name</key>
 							<string>comment.line.number-sign.erb</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>source.ruby.rails#view-helpers</string>
 						</dict>
 						<dict>
 							<key>include</key>
