@@ -279,9 +279,41 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(after_create|after_destroy|after_initialize|after_save|after_update|after_validation|after_validation_on_create|after_validation_on_update|before_create|before_destroy|before_save|before_update|before_validation|before_validation_on_create|before_validation_on_update|composed_of|belongs_to|has_one|has_many|has_and_belongs_to_many|validate|validates|validate_on_create|validates_numericality_of|validate_on_update|validates_acceptance_of|validates_associated|validates_confirmation_of|validates_each|validates_format_of|validates_inclusion_of|validates_exclusion_of|validates_length_of|validates_presence_of|validates_size_of|validates_uniqueness_of|attr_protected|attr_accessible|attr_readonly|accepts_nested_attributes_for|default_scope|scope|enum|normalizes)\b(?!:)</string>
+			<string>\b(after_create|after_destroy|after_initialize|after_save|after_update|after_validation|after_validation_on_create|after_validation_on_update|before_create|before_destroy|before_save|before_update|before_validation|before_validation_on_create|before_validation_on_update|composed_of|belongs_to|has_one|has_many|has_and_belongs_to_many|validate|validates|validate_on_create|validates_numericality_of|validate_on_update|validates_acceptance_of|validates_associated|validates_confirmation_of|validates_each|validates_format_of|validates_inclusion_of|validates_exclusion_of|validates_length_of|validates_presence_of|validates_size_of|validates_uniqueness_of|attr_protected|attr_accessible|attr_readonly|accepts_nested_attributes_for|default_scope|scope|enum|normalizes|around_save|around_create|around_update|around_destroy|after_find|after_touch|after_commit|after_rollback|after_create_commit|after_update_commit|after_destroy_commit|after_save_commit|validates_with|validates_absence_of|validates_comparison_of|has_secure_password|has_secure_token|generates_token_for|encrypts|store_accessor|delegated_type|query_constraints|connects_to|primary_abstract_class)\b(?!:)</string>
 			<key>name</key>
 			<string>support.function.activerecord.rails</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>support.function.activerecord.rails</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>These are also common variable names, so only match them as the first word on a line when followed by an argument.</string>
+			<key>match</key>
+			<string>^\s*(attribute|store)\b(?=\s+[:'"]|\()</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(has_one_attached|has_many_attached)\b(?!:)</string>
+			<key>name</key>
+			<string>support.function.activestorage.rails</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(has_rich_text)\b(?!:)</string>
+			<key>name</key>
+			<string>support.function.actiontext.rails</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(broadcasts|broadcasts_to|broadcasts_refreshes|broadcasts_refreshes_to)\b(?!:)</string>
+			<key>name</key>
+			<string>support.function.turbo.rails</string>
 		</dict>
 		<dict>
 			<key>match</key>
