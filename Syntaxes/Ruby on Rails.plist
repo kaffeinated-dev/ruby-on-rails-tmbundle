@@ -185,7 +185,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(^\s*)(?=ActiveRecord::Schema.+\.define)</string>
+			<string>(^\s*)(?=ActiveRecord::Schema(\[[\d.]+\])?\.define)</string>
 			<key>end</key>
 			<string>^\1(?=end)\b</string>
 			<key>name</key>
