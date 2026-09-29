@@ -30,3 +30,4 @@ jobs:
         ruby test/commands/model_generator_args_test.rb
         ruby test/commands/rails_navigator_test.rb
         ruby test/commands/editing_commands_test.rb
+        ruby test/commands/autocomplete_routes_test.rb

@@ -24,7 +24,7 @@ The commands run `bin/rails` in the Rails application of the current file (the c
 * **Jump to Method Definition** (⌃F): opens the definition of the method, class, association, or instance variable at the caret in `app`, `lib`, `config`, or `test`.
 * **Generate…** (⌃|): choose one of the application’s generators, enter its arguments, and see what was generated, with links to the new files. Existing files are kept.
 * **Create Partial From Selection** (⌃⇧H): moves the selected part of a view to a new partial and renders it instead. Without a selection, shows the partials rendered by the view inline for editing; run it again to write them back.
-* **Autocomplete Routes** (⌥⎋): completes route helpers (`posts_path`, `edit_post_url`, …) in controllers and views. The routes are cached until a routes file changes.
+* **Autocomplete Routes** (⌥⎋): completes route helpers (`posts_path`, `edit_post_url`, …) in controllers and views. The routes are cached until a routes file changes. With the [Language Server bundle](https://github.com/kaffeinated-dev/language-server.tmbundle) and a language server for the file (such as ruby-lsp, from the Ruby bundle), its completions follow the routes, so ⌥⎋ completes methods and constants too.
 * **Autocomplete Foreign Key Fixture Reference** (⌥⎋): completes fixture labels, e.g. `author: da` in a fixture or `users(:da` in a test. The **(List)** variant (⌥⇧⎋) adds to a list, e.g. `tags: ruby, ra`.
 * **Documentation for Word** (⌃H): opens the Rails API documentation for the method or class at the caret, looked up in the api.rubyonrails.org search index.
 * **Help** (⌃H): shows this list of commands.
