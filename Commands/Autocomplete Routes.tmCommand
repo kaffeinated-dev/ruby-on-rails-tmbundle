@@ -10,27 +10,38 @@
 rails_require_root
 export RAILS_ROOT
 
+# The completions of the document’s language server, from the Language Server
+# bundle (which this command requires, for TM_LANGUAGE_SERVER_BUNDLE_SUPPORT):
+# the items of a property list, or nothing.
+completions=""
+if [[ -x "${TM_LANGUAGE_SERVER_BUNDLE_SUPPORT:-}/bin/completions" ]]; then
+	completions=$("$TM_LANGUAGE_SERVER_BUNDLE_SUPPORT/bin/completions" 2&gt;/dev/null | sed -n '/^&lt;array&gt;$/,/^&lt;\/array&gt;$/{/^&lt;\/*array&gt;$/d;p;}')
+fi
+
 # Listing the routes starts the application, so they are cached until a
 # routes file changes.
 cache="${TMPDIR:-/tmp}/textmate-rails-routes-$(printf '%s' "$RAILS_ROOT" | /sbin/md5 -q).txt"
 if [[ ! -s "$cache" || -n "$(find "$RAILS_ROOT/config/routes.rb" "$RAILS_ROOT/config/routes" -newer "$cache" 2&gt;/dev/null | head -n 1)" ]]; then
-	if ! rails_run_with_timeout 60 bin/rails runner 'Rails.application.reload_routes!; puts Rails.application.routes.named_routes.names.sort' &gt; "$cache.new" 2&gt;/dev/null; then
+	if rails_run_with_timeout 60 bin/rails runner 'Rails.application.reload_routes!; puts Rails.application.routes.named_routes.names.sort' &gt; "$cache.new" 2&gt;/dev/null; then
+		mv "$cache.new" "$cache"
+	else
 		rm -f "$cache.new"
-		rails_exit_tool_tip "Could not list the routes of this application (bin/rails runner failed or took longer than a minute)."
+		[[ -n "$completions" ]] || rails_exit_tool_tip "Could not list the routes of this application (bin/rails runner failed or took longer than a minute)."
 	fi
-	mv "$cache.new" "$cache"
 fi
 
 typed=$(printf '%s' "${TM_CURRENT_LINE:0:${TM_LINE_INDEX:-0}}" | grep -oE '[A-Za-z0-9_]+$')
-suggestions="("
+routes=""
 while IFS= read -r name; do
 	[[ "$name" =~ ^[a-z_][a-z0-9_]*$ ]] || continue
 	# Routes Rails and its frameworks add for themselves.
 	[[ "$name" =~ ^(rails_(info|mailers|conductor|blob|direct_uploads|disk_service|service_blob|storage|representation|relay|incoming|inbound|mandrill|mailgun|postmark|sendgrid|mailbox)|update_rails_disk_service|turbo_(recede|refresh|resume)_) ]] &amp;&amp; continue
-	suggestions+="{ display = \"${name}_path\"; }, { display = \"${name}_url\"; }, "
-done &lt; "$cache"
-[[ "$suggestions" != "(" ]] || rails_exit_tool_tip "This application has no named routes."
-"$DIALOG" popup --suggestions "$suggestions)" --alreadyTyped "$typed" --additionalWordCharacters "_" &gt;/dev/null
+	routes+="&lt;dict&gt;&lt;key&gt;display&lt;/key&gt;&lt;string&gt;${name}_path&lt;/string&gt;&lt;/dict&gt;&lt;dict&gt;&lt;key&gt;display&lt;/key&gt;&lt;string&gt;${name}_url&lt;/string&gt;&lt;/dict&gt;"
+done &lt; &lt;(cat "$cache" 2&gt;/dev/null)
+[[ -n "$routes$completions" ]] || rails_exit_tool_tip "This application has no named routes."
+
+# The routes first, then the language server’s completions.
+"$DIALOG" popup --suggestions "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;&lt;plist version=\"1.0\"&gt;&lt;array&gt;$routes$completions&lt;/array&gt;&lt;/plist&gt;" --alreadyTyped "$typed" --additionalWordCharacters "_?!" &gt;/dev/null
 rails_exit_discard
 </string>
 	<key>input</key>
@@ -47,6 +58,15 @@ rails_exit_discard
 	<string>text</string>
 	<key>outputLocation</key>
 	<string>discard</string>
+	<key>require</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>Language Server</string>
+			<key>uuid</key>
+			<string>2B7B90FA-78B7-4922-98C7-C025E4F932B4</string>
+		</dict>
+	</array>
 	<key>scope</key>
 	<string>source.ruby.rails, text.html.erb.rails</string>
 	<key>uuid</key>
