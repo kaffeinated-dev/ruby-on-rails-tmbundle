@@ -29,7 +29,7 @@ rails_ruby "$TM_BUNDLE_SUPPORT/bin/partial.rb"
 	<key>outputLocation</key>
 	<string>replaceInput</string>
 	<key>scope</key>
-	<string>source.ruby.rails, text.html.erb.rails, text.haml</string>
+	<string>text.html.erb.rails, text.haml</string>
 	<key>uuid</key>
 	<string>1DD8A214-1C97-45BA-ADEE-8F888DDE8570</string>
 	<key>version</key>
