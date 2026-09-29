@@ -68,7 +68,7 @@ rails_exit_discard
 		</dict>
 	</array>
 	<key>scope</key>
-	<string>source.ruby.rails, text.html.erb.rails</string>
+	<string>source.ruby.rails, text.html.erb.rails, source.ruby.rails attr.language-server, text.html.erb.rails attr.language-server</string>
 	<key>uuid</key>
 	<string>0742F232-38ED-4C52-AD68-1858F0F2C601</string>
 	<key>version</key>
